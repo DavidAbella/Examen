@@ -17,16 +17,20 @@ async function displayPokemonList() {
   const listElement = document.createElement('ul');
   pokemonList.forEach(pokemon => {
     const listItem = document.createElement('li');
-    listItem.textContent = pokemon.name;
+    // listItem.textContent = pokemon.name;
     listItem.textContent = `${pokemon.name} (#${pokemon.url.split('/')[6]})`;
     listElement.appendChild(listItem);
   });
 
   document.body.appendChild(listElement);
 }
+
+displayPokemonList();
+
+
 async function onSearchPokemon(this){
   
 }
 
-  displayPokemonList();
+
   
