@@ -1,23 +1,32 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="utf8">
     <script src="./code.js"></script>
     <title>Pokedex</title>
+    <link rel="stylesheet" href="./style.css">
 </head>
 
-    <body>
-        <header>
-            <h1>Pokédex</h1>
-        </header>
-        <ul id="llista pokemon">
-        </ul>
-        <form onsubmit="return onSearchCharacter(this)">
-            <input type="text" name="search" placeholder="Search for a pokemon">
-            <button type="submit">Search</button>
-        </form>
-        <div id="searched-character-info">
-        </div>
-    </body>
+<body>
+    <header>
+        <h1>Pokédex</h1>
+    </header>
+    
+    <ul id="llista pokemon">
+
+    </ul>
+    <form onsubmit="return onSearchCharacter(this)">
+        <input type="text" name="search" placeholder="Search for a pokemon">
+        <button type="submit">Search</button>
+    </form>
+    <div id="searched-character-info">
+    </div>
+
+    <main>
+       <div id="pokedex">
+
+       </div> 
+    </main>
+</body>
     
 </html>
