@@ -1,7 +1,8 @@
 const POKEAPI_BASE_URL = 'https://pokeapi.co/api/v2';
+const globalPokemon = {};
 
 async function getPokemonList() {
-    const response = await fetch(`${POKEAPI_BASE_URL}/pokemon/`);
+    const response = await fetch(`${POKEAPI_BASE_URL}/pokemon/?limit=151`);
     //const response = await fetch('https://pokeapi.co/api/v2/pokemon/?limit=151');
     const data = await response.json();
   }
@@ -17,12 +18,16 @@ function onSearchPokemon() {
       alert('pokemon not found');
       return;
     }
+
+    let types = poke.types.map((type) => `<p class="${type.type.name} tipo">${type.type.name}</p>`);
+    types = types.join('');
+
     divPokemonInfo.innerHTML= `
       <h3>Character Info</h3>
       <p>Name: ${pokemon.name}</p>
-      <p>Type: ${character.height}</p>
-      <p>Img: ${character.mass}</p>
-      <button id="view-films-button" onclick="getPokemonList('${pokemon.url}')">View Pokemon</button>
+      <p>Id:  ${pokemon.id}</p>
+      <p>Type: ${pokemon.types}</p>
+      <p><img src="${poke.sprites.other["official-artwork"].front_default}" alt="${poke.name}"></p>
     `;
   });
 
@@ -41,21 +46,10 @@ async function displayPokemonList(){
 }
 */
 
-/*
-function onDisplayPokemonList() {
+
+async function onDisplayPokemonList() {
   const response = await fetch('https://pokeapi.co/api/v2/pokemon/?limit=151');
   const data = await response.json();
-  const pokemonList = data.results;
-  const formElements = form.elements;
-  const searchFormElement = formElements.search;
-  const pokemonName = searchFormElement.value;
-
-  displayPokemonList(pokemonName).then(async (pokemon) =>  {
-    if (!character) {
-      alert('pokemon not found');
-      return;
-    }
-    
   
     const titleElement = document.createElement('h2');
     titleElement.textContent = 'Pokédex Kanto';
@@ -71,12 +65,8 @@ function onDisplayPokemonList() {
   
     document.body.appendChild(listElement);
     
-  }
-
-  return false;
-
 }
-*/
+
 
 //async function onSearchPokemon(this){
   
