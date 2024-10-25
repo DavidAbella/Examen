@@ -28,9 +28,9 @@ async function displayPokemonList() {
 displayPokemonList();
 
 
-async function onSearchPokemon(this){
+//async function onSearchPokemon(this){
   
-}
+//}
 
 
   
