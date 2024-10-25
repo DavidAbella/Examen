@@ -25,13 +25,85 @@ async function displayPokemonList() {
 displayPokemonList();
 
 async function searchPokemon(pokemonName) {
-  const response = await fetch(`${POKEAPI_BASE_URL}/pokemon/${pokemonName}`);
+  const response = await fetch(`${POKEAPI_BASE_URL}/pokemon/${pokemonName.toLowerCase()}`);
   if (!response.ok) {
     return null;
   }
   const data = await response.json();
   return data;
 }
+
+function onSearchPokemon(event) {
+  event.preventDefault();
+  const searchFormElement = document.getElementById('search-input');
+  const pokemonName = searchFormElement.value.trim();
+  searchFormElement.value = '';
+
+  searchPokemon(pokemonName).then(pokemon => {
+    if (!pokemon) {
+      alert('Pokemon not found');
+      return;
+    }
+
+    const divPokemonInfo = document.getElementById('pokemon-info');
+    let types = pokemon.types.map(type => `<p class="${type.type.name} tipo">${type.type.name}</p>`);
+    types = types.join('');
+
+    divPokemonInfo.innerHTML = `
+      <h3>Character Info</h3>
+      <p>Name: ${pokemon.name}</p>
+      <p>Id: ${pokemon.id}</p>
+      <p>Type: ${types}</p>
+      <p><img src="${pokemon.sprites.other["official-artwork"].front_default}" alt="${pokemon.name}"></p>
+    `;
+  });
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  document.getElementById('search-form').addEventListener('submit', onSearchPokemon);
+  const divPokemonInfo = document.createElement('div');
+  divPokemonInfo.id = 'pokemon-info';
+  document.body.appendChild(divPokemonInfo);
+});
+
+function addPokemonToTeam(pokemonName) {
+  const teamElement = document.getElementById('team');
+  if (!teamElement) {
+    const newTeamElement = document.createElement('ul');
+    newTeamElement.id = 'team';
+    document.body.appendChild(newTeamElement);
+  }
+
+  searchPokemon(pokemonName).then(pokemon => {
+    if (!pokemon) {
+      alert('Pokemon not found');
+      return;
+    }
+
+    const teamList = document.getElementById('team');
+    if (teamList.children.length >= 6) {
+      alert('Team is full. You can only have 6 Pokémon in your team.');
+      return;
+    }
+
+    const listItem = document.createElement('li');
+    listItem.textContent = `${pokemon.name} (#${pokemon.id})`;
+    teamList.appendChild(listItem);
+  });
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  const addToTeamButton = document.createElement('button');
+  addToTeamButton.textContent = 'Add to Team';
+  addToTeamButton.addEventListener('click', () => {
+    const searchFormElement = document.getElementById('search-input');
+    const pokemonName = searchFormElement.value.trim();
+    addPokemonToTeam(pokemonName);
+  });
+  document.body.appendChild(addToTeamButton);
+});
+
+
 /*
 function onSearchPokemon() {
   const pokemonList = data.results;
