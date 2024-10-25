@@ -23,9 +23,11 @@ async function displayPokemonList() {
   });
 
   document.body.appendChild(listElement);
+
+  const kantoButton = document.getElementById('kantoButton');
+  kantoButton.addEventListener('click', displayPokemonList);
 }
 
-displayPokemonList();
 
 
 //async function onSearchPokemon(this){
