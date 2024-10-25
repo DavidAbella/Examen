@@ -1,12 +1,38 @@
 const POKEAPI_BASE_URL = 'https://pokeapi.co/api/v2';
-const globalPokemon = {};
 
 async function getPokemonList() {
-    const response = await fetch(`${POKEAPI_BASE_URL}/pokemon/?limit=151`);
-    //const response = await fetch('https://pokeapi.co/api/v2/pokemon/?limit=151');
-    const data = await response.json();
-  }
+  const response = await fetch(`${POKEAPI_BASE_URL}/pokemon/?limit=151`);
+  const data = await response.json();
+  return data.results;
+}
 
+async function displayPokemonList() {
+  const pokemonList = await getPokemonList();
+
+  const titleElement = document.createElement('h2');
+  titleElement.textContent = 'Pokédex Kanto';
+  document.body.appendChild(titleElement);
+
+  const listElement = document.createElement('ul');
+  pokemonList.forEach(pokemon => {
+    const listItem = document.createElement('li');
+    listItem.textContent = `${pokemon.name} (#${pokemon.url.split('/')[6]})`;
+    listElement.appendChild(listItem);
+  });
+
+  document.body.appendChild(listElement);
+}
+displayPokemonList();
+
+async function searchPokemon(pokemonName) {
+  const response = await fetch(`${POKEAPI_BASE_URL}/pokemon/${pokemonName}`);
+  if (!response.ok) {
+    return null;
+  }
+  const data = await response.json();
+  return data;
+}
+/*
 function onSearchPokemon() {
   const pokemonList = data.results;
   const formElements = form.elements;
@@ -34,43 +60,6 @@ function onSearchPokemon() {
   document.body.appendChild(listElement);
 
   return false;
-}
-
-
-/*
-async function displayPokemonList(){
-  const response = await fetch(`${SWAPI_BASE_URL}/pokemon/?limit=151'`);
-  const jsonResponse = await response.json();
-  const filmsArray = jsonResponse.results;
-  return filmsArray;
-}
-*/
-
-
-async function onDisplayPokemonList() {
-  const response = await fetch('https://pokeapi.co/api/v2/pokemon/?limit=151');
-  const data = await response.json();
-  
-    const titleElement = document.createElement('h2');
-    titleElement.textContent = 'Pokédex Kanto';
-    document.body.appendChild(titleElement);
-  
-    const listElement = document.createElement('ul');
-    pokemonList.forEach(pokemon => {
-      const listItem = document.createElement('li');
-      // listItem.textContent = pokemon.name;
-      listItem.textContent = `${pokemon.name} (#${pokemon.url.split('/')[6]})`;
-      listElement.appendChild(listItem);
-    });
-  
-    document.body.appendChild(listElement);
-    
-}
-
-
-//async function onSearchPokemon(this){
-  
-//}
-
+}*/
 
   
